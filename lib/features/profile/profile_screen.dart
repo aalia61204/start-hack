@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
-
-import 'profile_controller.dart';
 import 'profile_models.dart';
 
-class ProfileScreen extends ConsumerWidget {
+class ProfileScreen extends StatefulWidget {
   final VoidCallback? onExportCsv;
   final VoidCallback? onReloadDemo;
 
@@ -16,9 +13,26 @@ class ProfileScreen extends ConsumerWidget {
   });
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final profile = ref.watch(profileControllerProvider);
-    final controller = ref.read(profileControllerProvider.notifier);
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  late UserProfile _profile;
+
+  @override
+  void initState() {
+    super.initState();
+    _profile = UserProfile.demoProfile;
+  }
+
+  void _updateProfile(UserProfile newProfile) {
+    setState(() {
+      _profile = newProfile;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
 
     return Scaffold(
       appBar: AppBar(
@@ -38,7 +52,7 @@ class ProfileScreen extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Header Section
-            _buildHeader(profile),
+            _buildHeader(_profile),
             const SizedBox(height: 32),
             
             // Preferences Section
@@ -50,8 +64,8 @@ class ProfileScreen extends ConsumerWidget {
               title: 'Privacy — Blur amounts',
               subtitle: 'Hide transaction amounts in the app',
               trailing: Switch(
-                value: profile.blurAmounts,
-                onChanged: (_) => controller.toggleBlur(),
+                value: _profile.blurAmounts,
+                onChanged: (_) => _updateProfile(_profile.copyWith(blurAmounts: !_profile.blurAmounts)),
               ),
             ),
             const SizedBox(height: 16),
@@ -61,10 +75,10 @@ class ProfileScreen extends ConsumerWidget {
               title: 'Theme',
               subtitle: 'Choose your preferred theme',
               trailing: DropdownButton<String>(
-                value: profile.theme,
+                value: _profile.theme,
                 onChanged: (value) {
                   if (value != null) {
-                    controller.setTheme(value);
+                    _updateProfile(_profile.copyWith(theme: value));
                   }
                 },
                 items: const [
@@ -81,10 +95,10 @@ class ProfileScreen extends ConsumerWidget {
               title: 'Currency',
               subtitle: 'Default currency for transactions',
               trailing: DropdownButton<String>(
-                value: profile.currency,
+                value: _profile.currency,
                 onChanged: (value) {
                   if (value != null) {
-                    controller.setCurrency(value);
+                    _updateProfile(_profile.copyWith(currency: value));
                   }
                 },
                 items: const [
@@ -103,17 +117,17 @@ class ProfileScreen extends ConsumerWidget {
               trailing: SizedBox(
                 width: 100,
                 child: TextFormField(
-                  initialValue: profile.monthlyBudget?.toString() ?? '',
+                  initialValue: _profile.monthlyBudget?.toString() ?? '',
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                     hintText: '0.00',
-                    suffixText: profile.currency,
+                    suffixText: _profile.currency,
                     border: const OutlineInputBorder(),
                     contentPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
                   ),
                   onChanged: (value) {
                     final budget = double.tryParse(value);
-                    controller.setMonthlyBudget(budget);
+                    _updateProfile(_profile.copyWith(monthlyBudget: budget));
                   },
                 ),
               ),
@@ -128,7 +142,7 @@ class ProfileScreen extends ConsumerWidget {
             SizedBox(
               width: double.infinity,
               child: ElevatedButton.icon(
-                onPressed: onExportCsv,
+                onPressed: widget.onExportCsv,
                 icon: const Icon(Icons.download),
                 label: const Text('Export CSV'),
                 style: ElevatedButton.styleFrom(
@@ -142,7 +156,7 @@ class ProfileScreen extends ConsumerWidget {
             SizedBox(
               width: double.infinity,
               child: ElevatedButton.icon(
-                onPressed: onReloadDemo,
+                onPressed: widget.onReloadDemo,
                 icon: const Icon(Icons.refresh),
                 label: const Text('Reload Demo Data'),
                 style: ElevatedButton.styleFrom(
@@ -156,7 +170,7 @@ class ProfileScreen extends ConsumerWidget {
             SizedBox(
               width: double.infinity,
               child: OutlinedButton.icon(
-                onPressed: () => controller.resetDemo(),
+                onPressed: () => _updateProfile(UserProfile.demoProfile),
                 icon: const Icon(Icons.restore),
                 label: const Text('Reset demo profile'),
                 style: OutlinedButton.styleFrom(

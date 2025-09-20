@@ -1,52 +1,39 @@
 
+import 'package:ai_finance_manager/pages/analytics_page.dart';
+import 'package:ai_finance_manager/pages/expenses_page.dart';
+import 'package:ai_finance_manager/pages/home_page.dart';
+import 'package:ai_finance_manager/features/profile/profile_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
-class NavBar extends StatelessWidget {
-  final Widget child;
+class NavBar extends StatefulWidget {
+  const NavBar({super.key});
 
-  const NavBar({super.key, required this.child});
+  @override
+  State<NavBar> createState() => _NavBarState();
+}
 
-  int _getCurrentIndex(BuildContext context) {
-    final location = GoRouterState.of(context).uri.path;
-    switch (location) {
-      case '/':
-        return 0;
-      case '/expenses':
-        return 1;
-      case '/analytics':
-        return 2;
-      case '/profile':
-        return 3;
-      default:
-        return 0;
-    }
-  }
+class _NavBarState extends State<NavBar> {
+  int currentIndex = 0;
 
-  void _onTap(BuildContext context, int index) {
-    switch (index) {
-      case 0:
-        context.go('/');
-        break;
-      case 1:
-        context.go('/expenses');
-        break;
-      case 2:
-        context.go('/analytics');
-        break;
-      case 3:
-        context.go('/profile');
-        break;
-    }
+  void switchPages(int value) {
+    setState(() {
+      currentIndex = value;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: child,
+      body: currentIndex == 0 
+        ? const HomePage()
+        : currentIndex == 1
+          ? const ExpensesPage()
+          : currentIndex == 2
+            ? const AnalyticsPage()
+            : const ProfileScreen(),
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _getCurrentIndex(context),
-        onTap: (value) => _onTap(context, value),
+        currentIndex: currentIndex,
+        onTap: (value) => switchPages(value),
         showUnselectedLabels: false,
         selectedItemColor: Colors.purple,
         unselectedItemColor: Colors.grey,

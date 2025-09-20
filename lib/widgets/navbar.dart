@@ -1,63 +1,74 @@
 
-
-import 'package:ai_finance_manager/pages/analytics_page.dart';
-import 'package:ai_finance_manager/pages/expenses_page.dart';
-import 'package:ai_finance_manager/pages/home_page.dart';
-import 'package:ai_finance_manager/pages/profile_page.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
-class NavBar extends StatefulWidget {
-  const NavBar({super.key});
+class NavBar extends StatelessWidget {
+  final Widget child;
 
-  @override
-  State<NavBar> createState() => _NavBarState();
-}
+  const NavBar({super.key, required this.child});
 
-class _NavBarState extends State<NavBar> {
+  int _getCurrentIndex(BuildContext context) {
+    final location = GoRouterState.of(context).uri.path;
+    switch (location) {
+      case '/':
+        return 0;
+      case '/expenses':
+        return 1;
+      case '/analytics':
+        return 2;
+      case '/profile':
+        return 3;
+      default:
+        return 0;
+    }
+  }
 
-  int currentIndex = 0;
-
-  switchPages(int value) {
-    setState(() {
-      currentIndex = value;
-    });
+  void _onTap(BuildContext context, int index) {
+    switch (index) {
+      case 0:
+        context.go('/');
+        break;
+      case 1:
+        context.go('/expenses');
+        break;
+      case 2:
+        context.go('/analytics');
+        break;
+      case 3:
+        context.go('/profile');
+        break;
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: currentIndex == 0 
-        ? HomePage()
-        : currentIndex == 1
-          ? ExpensesPage()
-          : currentIndex == 2
-            ? AnalyticsPage()
-            : ProfilePage(),
+      body: child,
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: currentIndex,
-        onTap: (value) => switchPages(value),
+        currentIndex: _getCurrentIndex(context),
+        onTap: (value) => _onTap(context, value),
         showUnselectedLabels: false,
         selectedItemColor: Colors.purple,
         unselectedItemColor: Colors.grey,
         type: BottomNavigationBarType.fixed,
-        items: [
+        items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.space_dashboard_outlined),
             label: "Home",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.receipt_outlined),
+            label: "Expenses",
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.analytics_outlined),
-            label: "Home",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.space_dashboard_outlined),
-            label: "Home",
+            label: "Analytics",
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person_4_outlined),
-            label: "Home",
+            label: "Profile",
           ),
-        ]
+        ],
       ),
     );
   }

@@ -119,7 +119,7 @@ class _AiChatPageState extends State<AiChatPage> {
                 children: [
                   // Chat Header
                   Container(
-                    padding: EdgeInsets.all(2.h),
+                    padding: EdgeInsets.all(2.w),
                     decoration: BoxDecoration(
                       color: Colors.grey[50],
                       borderRadius: BorderRadius.only(
@@ -153,7 +153,7 @@ class _AiChatPageState extends State<AiChatPage> {
                   Expanded(
                     child: ListView.builder(
                       controller: _scrollController,
-                      padding: EdgeInsets.all(2.h),
+                      padding: EdgeInsets.all(2.w),
                       itemCount: _chatData.messages.length + (_isTyping ? 1 : 0),
                       itemBuilder: (context, index) {
                         if (index == _chatData.messages.length && _isTyping) {
@@ -283,9 +283,9 @@ class _AiChatPageState extends State<AiChatPage> {
           Flexible(
             child: Container(
               constraints: BoxConstraints(
-                maxWidth: 75.w,
+                maxWidth: MediaQuery.of(context).size.width * 0.75,
               ),
-              padding: EdgeInsets.all(2.h),
+              padding: EdgeInsets.all(2.w),
               decoration: BoxDecoration(
                 color: isUser ? Colors.blue[600] : Colors.grey[100],
                 borderRadius: BorderRadius.only(
@@ -371,7 +371,7 @@ class _AiChatPageState extends State<AiChatPage> {
           ),
           SizedBox(width: 1.w),
           Container(
-            padding: EdgeInsets.all(2.h),
+            padding: EdgeInsets.all(2.w),
             decoration: BoxDecoration(
               color: Colors.grey[100],
               borderRadius: BorderRadius.circular(2.5.h),
@@ -411,7 +411,7 @@ class _AiChatPageState extends State<AiChatPage> {
 
   Widget _buildMessageInput() {
     return Container(
-      padding: EdgeInsets.all(2.h),
+      padding: EdgeInsets.all(2.w),
       decoration: BoxDecoration(
         color: Colors.white,
         border: Border(

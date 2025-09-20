@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pie_chart/pie_chart.dart';
-import 'package:responsive_sizer/responsive_sizer.dart';
 import '../features/analytics/analytics_models.dart';
 
 class AnalyticsPage extends StatefulWidget {
@@ -28,7 +27,7 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
         title: Text(
           'Analytics',
           style: GoogleFonts.inter(
-            fontSize: 2.5.h,
+            fontSize: 20,
             fontWeight: FontWeight.w600,
           ),
         ),
@@ -47,21 +46,21 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
               const PopupMenuItem(value: 'This Year', child: Text('This Year')),
             ],
             child: Container(
-              margin: EdgeInsets.only(right: 2.w),
-              padding: EdgeInsets.symmetric(horizontal: 1.5.w, vertical: 0.8.h),
+              margin: const EdgeInsets.only(right: 16),
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
               decoration: BoxDecoration(
                 color: Colors.grey[100],
-                borderRadius: BorderRadius.circular(2.5.h),
+                borderRadius: BorderRadius.circular(20),
               ),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
                     _selectedPeriod,
-                    style: GoogleFonts.inter(fontSize: 1.7.h),
+                    style: GoogleFonts.inter(fontSize: 14),
                   ),
-                  SizedBox(width: 0.5.w),
-                  Icon(Icons.keyboard_arrow_down, size: 2.h),
+                  const SizedBox(width: 4),
+                  const Icon(Icons.keyboard_arrow_down, size: 16),
                 ],
               ),
             ),
@@ -69,25 +68,25 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
         ],
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(2.h),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Budget Overview Card
             _buildBudgetOverviewCard(),
-            SizedBox(height: 3.h),
+            const SizedBox(height: 24),
             
             // Insights Section
             _buildInsightsSection(),
-            SizedBox(height: 3.h),
+            const SizedBox(height: 24),
             
             // Spending Categories Chart
             _buildSpendingCategoriesChart(),
-            SizedBox(height: 3.h),
+            const SizedBox(height: 24),
             
             // Monthly Trend Chart
             _buildMonthlyTrendChart(),
-            SizedBox(height: 3.h),
+            const SizedBox(height: 24),
             
             // Category Breakdown List
             _buildCategoryBreakdownList(),
@@ -102,7 +101,7 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
     final isOverBudget = budgetUsed > 1.0;
     
     return Container(
-      padding: EdgeInsets.all(2.5.h),
+      padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: isOverBudget 
@@ -111,12 +110,12 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
-        borderRadius: BorderRadius.circular(2.h),
+        borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
             color: (isOverBudget ? Colors.red : Colors.blue).withOpacity(0.3),
-            blurRadius: 1.2.h,
-            offset: Offset(0, 0.5.h),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
           ),
         ],
       ),
@@ -130,28 +129,28 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
                 'Budget Overview',
                 style: GoogleFonts.inter(
                   color: Colors.white,
-                  fontSize: 2.2.h,
+                  fontSize: 18,
                   fontWeight: FontWeight.w600,
                 ),
               ),
               Container(
-                padding: EdgeInsets.symmetric(horizontal: 1.w, vertical: 0.5.h),
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                 decoration: BoxDecoration(
                   color: Colors.white.withOpacity(0.2),
-                  borderRadius: BorderRadius.circular(1.5.h),
+                  borderRadius: BorderRadius.circular(12),
                 ),
                 child: Text(
                   _selectedPeriod,
                   style: GoogleFonts.inter(
                     color: Colors.white,
-                    fontSize: 1.5.h,
+                    fontSize: 12,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
               ),
             ],
           ),
-          SizedBox(height: 2.h),
+          const SizedBox(height: 16),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -162,7 +161,7 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
                     'CHF ${_analyticsData.totalSpent.toStringAsFixed(0)}',
                     style: GoogleFonts.inter(
                       color: Colors.white,
-                      fontSize: 3.5.h,
+                      fontSize: 28,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -170,7 +169,7 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
                     'of CHF ${_analyticsData.monthlyBudget.toStringAsFixed(0)}',
                     style: GoogleFonts.inter(
                       color: Colors.white.withOpacity(0.8),
-                      fontSize: 1.7.h,
+                      fontSize: 14,
                     ),
                   ),
                 ],
@@ -182,7 +181,7 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
                     'CHF ${_analyticsData.budgetRemaining.toStringAsFixed(0)}',
                     style: GoogleFonts.inter(
                       color: Colors.white,
-                      fontSize: 2.5.h,
+                      fontSize: 20,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
@@ -190,26 +189,26 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
                     'remaining',
                     style: GoogleFonts.inter(
                       color: Colors.white.withOpacity(0.8),
-                      fontSize: 1.5.h,
+                      fontSize: 12,
                     ),
                   ),
                 ],
               ),
             ],
           ),
-          SizedBox(height: 2.h),
+          const SizedBox(height: 16),
           LinearProgressIndicator(
             value: budgetUsed.clamp(0.0, 1.0),
             backgroundColor: Colors.white.withOpacity(0.3),
             valueColor: const AlwaysStoppedAnimation<Color>(Colors.white),
-            minHeight: 1.h,
+            minHeight: 8,
           ),
-          SizedBox(height: 1.h),
+          const SizedBox(height: 8),
           Text(
             '${(budgetUsed * 100).toStringAsFixed(1)}% of budget used',
             style: GoogleFonts.inter(
               color: Colors.white.withOpacity(0.9),
-              fontSize: 1.5.h,
+              fontSize: 12,
             ),
           ),
         ],
@@ -224,20 +223,20 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
         Text(
           'Key Insights',
           style: GoogleFonts.inter(
-            fontSize: 2.5.h,
+            fontSize: 20,
             fontWeight: FontWeight.w600,
             color: Colors.grey[800],
           ),
         ),
-        SizedBox(height: 2.h),
+        const SizedBox(height: 16),
         GridView.builder(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
             childAspectRatio: 1.2,
-            crossAxisSpacing: 1.5.w,
-            mainAxisSpacing: 1.5.h,
+            crossAxisSpacing: 12,
+            mainAxisSpacing: 12,
           ),
           itemCount: _analyticsData.insights.length,
           itemBuilder: (context, index) {
@@ -263,16 +262,16 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
     }
 
     return Container(
-      padding: EdgeInsets.all(2.h),
+      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(1.5.h),
+        borderRadius: BorderRadius.circular(12),
         border: Border.all(color: Colors.grey[200]!),
         boxShadow: [
           BoxShadow(
             color: Colors.grey.withOpacity(0.1),
-            blurRadius: 0.5.h,
-            offset: Offset(0, 0.2.h),
+            blurRadius: 4,
+            offset: const Offset(0, 2),
           ),
         ],
       ),
@@ -283,7 +282,7 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
             children: [
               Text(
                 insight.icon,
-                style: TextStyle(fontSize: 2.5.h),
+                style: const TextStyle(fontSize: 20),
               ),
               const Spacer(),
               Icon(
@@ -293,33 +292,33 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
                     ? Icons.trending_down 
                     : Icons.trending_flat,
                 color: trendColor,
-                size: 2.h,
+                size: 16,
               ),
             ],
           ),
-          SizedBox(height: 1.h),
+          const SizedBox(height: 8),
           Text(
             insight.title,
             style: GoogleFonts.inter(
-              fontSize: 1.7.h,
+              fontSize: 14,
               fontWeight: FontWeight.w600,
               color: Colors.grey[800],
             ),
           ),
-          SizedBox(height: 0.5.h),
+          const SizedBox(height: 4),
           Text(
             insight.value,
             style: GoogleFonts.inter(
-              fontSize: 2.2.h,
+              fontSize: 18,
               fontWeight: FontWeight.bold,
               color: trendColor,
             ),
           ),
-          SizedBox(height: 0.5.h),
+          const SizedBox(height: 4),
           Text(
             insight.description,
             style: GoogleFonts.inter(
-              fontSize: 1.3.h,
+              fontSize: 11,
               color: Colors.grey[600],
             ),
             maxLines: 2,
@@ -346,41 +345,41 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
         Text(
           'Spending by Category',
           style: GoogleFonts.inter(
-            fontSize: 2.5.h,
+            fontSize: 20,
             fontWeight: FontWeight.w600,
             color: Colors.grey[800],
           ),
         ),
-        SizedBox(height: 2.h),
+        const SizedBox(height: 16),
         Container(
-          padding: EdgeInsets.all(2.5.h),
+          padding: const EdgeInsets.all(20),
           decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.circular(2.h),
+            borderRadius: BorderRadius.circular(16),
             border: Border.all(color: Colors.grey[200]!),
             boxShadow: [
               BoxShadow(
                 color: Colors.grey.withOpacity(0.1),
-                blurRadius: 0.5.h,
-                offset: Offset(0, 0.2.h),
+                blurRadius: 4,
+                offset: const Offset(0, 2),
               ),
             ],
           ),
           child: PieChart(
             dataMap: dataMap,
             animationDuration: const Duration(milliseconds: 800),
-            chartLegendSpacing: 4.w,
-            chartRadius: 30.w,
+            chartLegendSpacing: 32,
+            chartRadius: MediaQuery.of(context).size.width / 3.2,
             colorList: colorList,
             initialAngleInDegree: 0,
             chartType: ChartType.ring,
-            ringStrokeWidth: 4.w,
-            legendOptions: LegendOptions(
+            ringStrokeWidth: 32,
+            legendOptions: const LegendOptions(
               showLegendsInRow: false,
               legendPosition: LegendPosition.right,
               showLegends: true,
               legendShape: BoxShape.circle,
-              legendTextStyle: TextStyle(fontSize: 1.5.h),
+              legendTextStyle: TextStyle(fontSize: 12),
             ),
             chartValuesOptions: const ChartValuesOptions(
               showChartValueBackground: true,
@@ -402,24 +401,24 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
         Text(
           'Monthly Spending Trend',
           style: GoogleFonts.inter(
-            fontSize: 2.5.h,
+            fontSize: 20,
             fontWeight: FontWeight.w600,
             color: Colors.grey[800],
           ),
         ),
-        SizedBox(height: 2.h),
+        const SizedBox(height: 16),
         Container(
-          height: 25.h,
-          padding: EdgeInsets.all(2.5.h),
+          height: 200,
+          padding: const EdgeInsets.all(20),
           decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.circular(2.h),
+            borderRadius: BorderRadius.circular(16),
             border: Border.all(color: Colors.grey[200]!),
             boxShadow: [
               BoxShadow(
                 color: Colors.grey.withOpacity(0.1),
-                blurRadius: 0.5.h,
-                offset: Offset(0, 0.2.h),
+                blurRadius: 4,
+                offset: const Offset(0, 2),
               ),
             ],
           ),
@@ -438,31 +437,31 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       crossAxisAlignment: CrossAxisAlignment.end,
       children: _analyticsData.monthlyData.map((data) {
-        final height = (data.amount / maxAmount) * 15.h;
+        final height = (data.amount / maxAmount) * 120;
         return Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             Text(
               'CHF ${data.amount.toStringAsFixed(0)}',
               style: GoogleFonts.inter(
-                fontSize: 1.2.h,
+                fontSize: 10,
                 color: Colors.grey[600],
               ),
             ),
-            SizedBox(height: 0.5.h),
+            const SizedBox(height: 4),
             Container(
-              width: 4.w,
+              width: 30,
               height: height,
               decoration: BoxDecoration(
                 color: Colors.blue[400],
-                borderRadius: BorderRadius.circular(0.5.h),
+                borderRadius: BorderRadius.circular(4),
               ),
             ),
-            SizedBox(height: 1.h),
+            const SizedBox(height: 8),
             Text(
               data.month,
               style: GoogleFonts.inter(
-                fontSize: 1.5.h,
+                fontSize: 12,
                 fontWeight: FontWeight.w500,
                 color: Colors.grey[700],
               ),
@@ -480,46 +479,46 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
         Text(
           'Category Breakdown',
           style: GoogleFonts.inter(
-            fontSize: 2.5.h,
+            fontSize: 20,
             fontWeight: FontWeight.w600,
             color: Colors.grey[800],
           ),
         ),
-        SizedBox(height: 2.h),
+        const SizedBox(height: 16),
         ..._analyticsData.categories.map((category) {
           final percentage = (category.amount / _analyticsData.totalSpent) * 100;
           return Container(
-            margin: EdgeInsets.only(bottom: 1.5.h),
-            padding: EdgeInsets.all(2.h),
+            margin: const EdgeInsets.only(bottom: 12),
+            padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.circular(1.5.h),
+              borderRadius: BorderRadius.circular(12),
               border: Border.all(color: Colors.grey[200]!),
               boxShadow: [
                 BoxShadow(
                   color: Colors.grey.withOpacity(0.1),
-                  blurRadius: 0.5.h,
-                  offset: Offset(0, 0.2.h),
+                  blurRadius: 4,
+                  offset: const Offset(0, 2),
                 ),
               ],
             ),
             child: Row(
               children: [
                 Container(
-                  width: 5.h,
-                  height: 5.h,
+                  width: 40,
+                  height: 40,
                   decoration: BoxDecoration(
                     color: Color(int.parse(category.color.replaceAll('#', '0xFF'))).withOpacity(0.1),
-                    borderRadius: BorderRadius.circular(1.h),
+                    borderRadius: BorderRadius.circular(8),
                   ),
                   child: Center(
                     child: Text(
                       category.icon,
-                      style: TextStyle(fontSize: 2.5.h),
+                      style: const TextStyle(fontSize: 20),
                     ),
                   ),
                 ),
-                SizedBox(width: 2.w),
+                const SizedBox(width: 16),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -527,16 +526,16 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
                       Text(
                         category.name,
                         style: GoogleFonts.inter(
-                          fontSize: 2.h,
+                          fontSize: 16,
                           fontWeight: FontWeight.w600,
                           color: Colors.grey[800],
                         ),
                       ),
-                      SizedBox(height: 0.5.h),
+                      const SizedBox(height: 4),
                       Text(
                         '${percentage.toStringAsFixed(1)}% of total spending',
                         style: GoogleFonts.inter(
-                          fontSize: 1.5.h,
+                          fontSize: 12,
                           color: Colors.grey[600],
                         ),
                       ),
@@ -546,7 +545,7 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
                 Text(
                   'CHF ${category.amount.toStringAsFixed(0)}',
                   style: GoogleFonts.inter(
-                    fontSize: 2.h,
+                    fontSize: 16,
                     fontWeight: FontWeight.bold,
                     color: Colors.grey[800],
                   ),

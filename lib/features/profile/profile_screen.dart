@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
+
 import 'profile_controller.dart';
 import 'profile_models.dart';
 
@@ -104,11 +105,11 @@ class ProfileScreen extends ConsumerWidget {
                 child: TextFormField(
                   initialValue: profile.monthlyBudget?.toString() ?? '',
                   keyboardType: TextInputType.number,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     hintText: '0.00',
                     suffixText: profile.currency,
-                    border: OutlineInputBorder(),
-                    contentPadding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                    border: const OutlineInputBorder(),
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
                   ),
                   onChanged: (value) {
                     final budget = double.tryParse(value);

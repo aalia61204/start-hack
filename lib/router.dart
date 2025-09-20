@@ -1,11 +1,11 @@
-import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'widgets/navbar.dart';
-import 'pages/home_page.dart';
-import 'pages/expenses_page.dart';
-import 'pages/analytics_page.dart';
+import 'package:go_router/go_router.dart';
+
 import 'features/profile/profile_screen.dart';
+import 'pages/analytics_page.dart';
+import 'pages/expenses_page.dart';
+import 'pages/home_page.dart';
+import 'widgets/navbar.dart';
 
 final routerProvider = Provider<GoRouter>((ref) {
   return GoRouter(

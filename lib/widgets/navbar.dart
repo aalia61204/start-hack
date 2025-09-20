@@ -1,9 +1,11 @@
 
+import 'package:ai_finance_manager/features/profile/profile_screen.dart';
 import 'package:ai_finance_manager/pages/analytics_page.dart';
 import 'package:ai_finance_manager/pages/expenses_page.dart';
 import 'package:ai_finance_manager/pages/home_page.dart';
-import 'package:ai_finance_manager/features/profile/profile_screen.dart';
 import 'package:flutter/material.dart';
+
+import '../constants/themes.dart';
 
 class NavBar extends StatefulWidget {
   const NavBar({super.key});
@@ -35,7 +37,7 @@ class _NavBarState extends State<NavBar> {
         currentIndex: currentIndex,
         onTap: (value) => switchPages(value),
         showUnselectedLabels: false,
-        selectedItemColor: Colors.purple,
+        selectedItemColor: primaryClr,
         unselectedItemColor: Colors.grey,
         type: BottomNavigationBarType.fixed,
         items: const [

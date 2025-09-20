@@ -1,5 +1,10 @@
+import 'package:ai_finance_manager/data/api.dart';
+import 'package:ai_finance_manager/pages/ai_chat_page.dart';
 import 'package:flutter/material.dart';
 import 'package:pie_chart/pie_chart.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
+
+import '../constants/themes.dart';
 
 class ExpensesPage extends StatefulWidget {
   const ExpensesPage({super.key});
@@ -26,6 +31,12 @@ class _ExpensesPageState extends State<ExpensesPage> {
   ];
 
   @override
+  void initState() {
+    super.initState();
+    Apis().fetchBankData();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 4,
@@ -34,6 +45,9 @@ class _ExpensesPageState extends State<ExpensesPage> {
           child: Column(
             children: [
               TabBar(
+                indicatorColor: primaryClr,
+                labelColor: primaryClr,
+                unselectedLabelColor: Colors.grey,
                 tabs: [
                   Tab(
                     text: "Daily",
@@ -63,8 +77,11 @@ class _ExpensesPageState extends State<ExpensesPage> {
           ),
         ),
         floatingActionButton: FloatingActionButton(
-          child: Icon(Icons.chat),
-          onPressed: () {}
+          backgroundColor: Colors.white70,
+          child: Icon(Icons.chat, color: primaryClr,),
+          onPressed: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) => AiChatPage(),));
+          }
         ),
       ),
     );
@@ -80,21 +97,19 @@ class _ExpensesPageState extends State<ExpensesPage> {
         PieChart(
           dataMap: dataMap,
           animationDuration: Duration(milliseconds: 800),
-          chartLegendSpacing: 32,
-          chartRadius: MediaQuery.of(context).size.width / 3.2,
+          chartLegendSpacing: 30.sp,
+          chartRadius: MediaQuery.of(context).size.width / 2.8,
           colorList: colorList,
           initialAngleInDegree: 0,
           chartType: ChartType.ring,
           ringStrokeWidth: 32,
-          centerText: "HYBRID",
+          centerText: "\$ 200",
           legendOptions: LegendOptions(
             showLegendsInRow: false,
             legendPosition: LegendPosition.right,
             showLegends: true,
             legendShape: BoxShape.circle,
-            legendTextStyle: TextStyle(
-              fontWeight: FontWeight.bold,
-            ),
+            legendTextStyle: lighttitlestyle
           ),
           chartValuesOptions: ChartValuesOptions(
             showChartValueBackground: true,
@@ -113,12 +128,12 @@ class _ExpensesPageState extends State<ExpensesPage> {
             itemBuilder: (context, index) {
               return Card(
                 margin: EdgeInsets.all(10),
-                elevation: 4,
+                elevation: 2,
                 shadowColor: Colors.grey.shade100,
                 child: ListTile(
                   leading: CircleAvatar(
-                    backgroundColor: Colors.purple,
-                    child: Icon(Icons.g_mobiledata),
+                    backgroundColor: primaryClr.withAlpha(150),
+                    child: Icon(Icons.g_mobiledata, color: Colors.white, size: 22.sp,),
                   ),
                   title: Text("Groceries"),
                   subtitle: Text("REWE"),

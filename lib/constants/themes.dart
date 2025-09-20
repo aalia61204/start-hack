@@ -1,8 +1,3 @@
-
-
-
-
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -18,3 +13,7 @@ TextStyle lighttitlestyle = GoogleFonts.poppins(
   fontWeight: FontWeight.normal,
   color: Colors.black
 );
+
+
+const primaryClr = Color(0xff008751);
+const black = Color(0xff000000);

@@ -6,6 +6,8 @@ import 'package:ai_finance_manager/pages/home_page.dart';
 import 'package:ai_finance_manager/pages/profile_page.dart';
 import 'package:flutter/material.dart';
 
+import '../constants/themes.dart';
+
 class NavBar extends StatefulWidget {
   const NavBar({super.key});
 
@@ -37,7 +39,7 @@ class _NavBarState extends State<NavBar> {
         currentIndex: currentIndex,
         onTap: (value) => switchPages(value),
         showUnselectedLabels: false,
-        selectedItemColor: Colors.purple,
+        selectedItemColor: primaryClr,
         unselectedItemColor: Colors.grey,
         type: BottomNavigationBarType.fixed,
         items: [
@@ -46,16 +48,16 @@ class _NavBarState extends State<NavBar> {
             label: "Home",
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.analytics_outlined),
-            label: "Home",
+            icon: Icon(Icons.attach_money_rounded),
+            label: "Expenses",
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.space_dashboard_outlined),
-            label: "Home",
+            icon: Icon(Icons.analytics_outlined),
+            label: "Analytics",
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person_4_outlined),
-            label: "Home",
+            label: "Profile",
           ),
         ]
       ),

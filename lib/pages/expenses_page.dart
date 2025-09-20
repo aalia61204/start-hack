@@ -1,5 +1,6 @@
 import 'package:ai_finance_manager/data/api.dart';
-import 'package:ai_finance_manager/pages/ai_chat_page.dart';
+import 'package:ai_finance_manager/model/bank_model.dart';
+import 'package:ai_finance_manager/pages/chat_page.dart';
 import 'package:flutter/material.dart';
 import 'package:pie_chart/pie_chart.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -15,13 +16,7 @@ class ExpensesPage extends StatefulWidget {
 
 class _ExpensesPageState extends State<ExpensesPage> {
 
-
-  Map<String, double> dataMap = {
-    "R": 5,
-    "F": 3,
-    "C": 2,
-    "V": 2,
-  };
+  Map<String, double> dataMap = {};
 
   List<Color> colorList = [
     Colors.red,
@@ -30,10 +25,47 @@ class _ExpensesPageState extends State<ExpensesPage> {
     Colors.yellow,
   ];
 
+  List<BankModel> bankdata = [];
+  List<String?> cateories = [];
+  var rawbankdata=[];
+
+  bool loading = false;
+
   @override
   void initState() {
     super.initState();
-    Apis().fetchBankData();
+    getBankdata();
+  }
+
+  getBankdata() async {
+    try {
+      loading = true;
+      setState(() {});
+      List data = await Apis().fetchBankData();
+      rawbankdata = data;
+      bankdata = data.map((e) => BankModel.fromJson(e)).toList();
+      _processBankData();
+    } finally {
+      loading = false;
+      setState(() {});
+    }
+  }
+
+  void _processBankData() {
+    cateories = bankdata.map((e) => e.cATEGORY).where((c) => c != null).toSet().toList().cast<String>();
+    final newMap = <String, double>{};
+    double totalExpenses = 0;
+
+    for (var item in bankdata) {
+      if (item.cATEGORY != null) {
+        // Assuming 'aMOUNT' is the property holding the transaction value in BankModel.
+        // Please change 'item.aMOUNT' if your property is named differently.
+        final amount = item.aMOUNT ?? 0.0;
+        newMap.update(item.cATEGORY!, (value) => value + amount, ifAbsent: () => amount);
+        totalExpenses += amount;
+      }
+    }
+    dataMap = newMap;
   }
 
   @override
@@ -50,6 +82,9 @@ class _ExpensesPageState extends State<ExpensesPage> {
                 unselectedLabelColor: Colors.grey,
                 tabs: [
                   Tab(
+                    text: "All",
+                  ),
+                  Tab(
                     text: "Daily",
                   ),
                   Tab(
@@ -58,13 +93,11 @@ class _ExpensesPageState extends State<ExpensesPage> {
                   Tab(
                     text: "Monthly",
                   ),
-                  Tab(
-                    text: "Yearly",
-                  ),
                 ] 
               ),
               Expanded(
-                child: TabBarView(
+                child: loading ? Center(child: CircularProgressIndicator(),) : 
+                TabBarView(
                   children: [
                     _buildPieChart(),
                     _buildPieChart(),
@@ -78,9 +111,9 @@ class _ExpensesPageState extends State<ExpensesPage> {
         ),
         floatingActionButton: FloatingActionButton(
           backgroundColor: Colors.white70,
-          child: Icon(Icons.chat, color: primaryClr,),
+          child: Icon(Icons.smart_toy_outlined, color: primaryClr,),
           onPressed: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => AiChatPage(),));
+            Navigator.push(context, MaterialPageRoute(builder: (context) => ChatPage(transactionData: rawbankdata.toString(),),));
           }
         ),
       ),
@@ -97,13 +130,13 @@ class _ExpensesPageState extends State<ExpensesPage> {
         PieChart(
           dataMap: dataMap,
           animationDuration: Duration(milliseconds: 800),
-          chartLegendSpacing: 30.sp,
-          chartRadius: MediaQuery.of(context).size.width / 2.8,
+          chartLegendSpacing: 20.sp,
+          chartRadius: MediaQuery.of(context).size.width / 2.3,
           colorList: colorList,
           initialAngleInDegree: 0,
           chartType: ChartType.ring,
-          ringStrokeWidth: 32,
-          centerText: "\$ 200",
+          ringStrokeWidth: 20.sp,
+          centerText: "\$ ${dataMap.values.fold<double>(0.0, (prev, e) => prev + e).toStringAsFixed(2)}",
           legendOptions: LegendOptions(
             showLegendsInRow: false,
             legendPosition: LegendPosition.right,
@@ -124,7 +157,7 @@ class _ExpensesPageState extends State<ExpensesPage> {
         ),
         Expanded(
           child: ListView.builder(
-            itemCount: 10,
+            itemCount: bankdata.length,
             itemBuilder: (context, index) {
               return Card(
                 margin: EdgeInsets.all(10),
@@ -135,8 +168,9 @@ class _ExpensesPageState extends State<ExpensesPage> {
                     backgroundColor: primaryClr.withAlpha(150),
                     child: Icon(Icons.g_mobiledata, color: Colors.white, size: 22.sp,),
                   ),
-                  title: Text("Groceries"),
-                  subtitle: Text("REWE"),
+                  title: Text(bankdata[index].tEXTCREDITOR.toString(), style: lighttitlestyle.copyWith(fontSize: 15.sp),),
+                  subtitle: Text(bankdata[index].cATEGORY.toString(), style: lighttitlestyle.copyWith(fontSize: 14.sp, color: Colors.grey),),
+                  trailing: Text("CHF ${bankdata[index].aMOUNT}", style: lighttitlestyle.copyWith(fontSize: 14.sp, color: Colors.red),),
                 ),
               );
             }, 

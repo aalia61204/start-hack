@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pie_chart/pie_chart.dart';
+
 import '../features/analytics/analytics_models.dart';
 
 class AnalyticsPage extends StatefulWidget {
@@ -234,7 +235,7 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
           physics: const NeverScrollableScrollPhysics(),
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
-            childAspectRatio: 1.2,
+            childAspectRatio: 0.9,
             crossAxisSpacing: 12,
             mainAxisSpacing: 12,
           ),

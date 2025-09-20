@@ -1,6 +1,5 @@
 
 import 'package:ai_finance_manager/features/profile/profile_screen.dart';
-import 'package:ai_finance_manager/pages/ai_chat_page.dart';
 import 'package:ai_finance_manager/pages/analytics_page.dart';
 import 'package:ai_finance_manager/pages/expenses_page.dart';
 import 'package:ai_finance_manager/pages/home_page.dart';
@@ -33,8 +32,8 @@ class _NavBarState extends State<NavBar> {
           ? const ExpensesPage()
           : currentIndex == 2
             ? const AnalyticsPage()
-            : currentIndex == 3
-              ? const AiChatPage()
+            // : currentIndex == 3
+            //   ? const AiChatPage()
               : const ProfileScreen(),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: currentIndex,
@@ -56,10 +55,10 @@ class _NavBarState extends State<NavBar> {
             icon: Icon(Icons.analytics_outlined),
             label: "Analytics",
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.smart_toy_outlined),
-            label: "AI Chat",
-          ),
+          // BottomNavigationBarItem(
+          //   icon: Icon(Icons.smart_toy_outlined),
+          //   label: "AI Chat",
+          // ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person_4_outlined),
             label: "Profile",

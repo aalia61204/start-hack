@@ -2,7 +2,8 @@
 
 A prototype Personal Financial Management (PFM) mobile application developed for the **SGKB x IBM START Hack Tour 2025**. This project demonstrates how Generative AI can enhance users' financial well-being by providing insightful analysis and a conversational interface to manage expenses.
 
-![HomePage Screenshot](screenshots/homepage.jpg)
+<img src="screenshots/homepage.jpg" width="200" alt="Home Page Screenshot">
+
 
 ## The Challenge
 
@@ -47,13 +48,13 @@ The application automatically categorizes transactions to provide a meaningful b
 
 Here's a gallery of the application's main screens.
 
-| Home Page | AI Chat Assistant |
-| :---: | :---: |
-| ![HomePage Screenshot](screenshots/homepage.jpg) | ![ChatPage Screenshot](screenshots/chatpage.jpg) |
-
-| Expenses Overview | Analytics | Profile |
+| Home Page | AI Chat Assistant | Expenses Overview |
 | :---: | :---: | :---: |
-| ![ExpensesPage Screenshot](screenshots/expensespage.jpg) | ![AnalyticsPage Screenshot](screenshots/analyticspage.jpg) | ![ProfilePage Screenshot](screenshots/profilepage.jpg) |
+| <img src="screenshots/homepage.jpg" width="200" alt="Home Page Screenshot"> | <img src="screenshots/chatpage.jpg" width="200" alt="AI Chat Assistant Screenshot"> | <img src="screenshots/expensespage.jpg" width="200" alt="Expenses Page Screenshot"> |
+
+| Analytics | Profile |
+| :---: | :---: |
+| <img src="screenshots/analyticspage.jpg" width="200" alt="Analytics Page Screenshot"> | <img src="screenshots/profilepage.jpg" width="200" alt="Profile Page Screenshot"> |
 
 
 ## Tech Stack

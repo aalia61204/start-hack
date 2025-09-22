@@ -2,8 +2,6 @@
 
 A prototype Personal Financial Management (PFM) mobile application developed for the **SGKB x IBM START Hack Tour 2025**. This project demonstrates how Generative AI can enhance users' financial well-being by providing insightful analysis and a conversational interface to manage expenses.
 
-<img src="screenshots/homepage.jpg" width="200" alt="Home Page Screenshot">
-
 
 ## The Challenge
 

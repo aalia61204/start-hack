@@ -2,7 +2,7 @@
 
 A prototype Personal Financial Management (PFM) mobile application developed for the **SGKB x IBM START Hack Tour 2025**. This project demonstrates how Generative AI can enhance users' financial well-being by providing insightful analysis and a conversational interface to manage expenses.
 
-![HomePage Screenshot](screenshots/home_page.png)
+![HomePage Screenshot](screenshots/homepage.jpg)
 
 ## The Challenge
 
@@ -39,18 +39,28 @@ Users can have a natural conversation about their finances with our AI assistant
 - **Context-Aware Advice:** The AI is fed the user's transaction data (in a secure, anonymized manner) to provide personalized summaries, insights, and advice.
 - **Pre-defined & Custom Queries:** Users can use quick-action chips for common questions or type their own queries.
 
-![ChatPage Screenshot](screenshots/chat_page.png)
-
 #### 3. Smart Transaction Categorization
 
 The application automatically categorizes transactions to provide a meaningful breakdown of spending. For the hackathon, this is implemented using a client-side rules-based engine.
+
+## Screenshots
+
+Here's a gallery of the application's main screens.
+
+| Home Page | AI Chat Assistant |
+| :---: | :---: |
+| ![HomePage Screenshot](screenshots/homepage.jpg) | ![ChatPage Screenshot](screenshots/chatpage.jpg) |
+
+| Expenses Overview | Analytics | Profile |
+| :---: | :---: | :---: |
+| ![ExpensesPage Screenshot](screenshots/expensespage.jpg) | ![AnalyticsPage Screenshot](screenshots/analyticspage.jpg) | ![ProfilePage Screenshot](screenshots/profilepage.jpg) |
+
 
 ## Tech Stack
 
 *   **Frontend (Mobile App):**
     *   Flutter & Dart
-    *   `responsive_sizer` for a fully responsive UI.
-    *   `http` for API communication.
+
 *   **Generative AI:**
     *   Google Gemini API for the conversational chat feature.
 
@@ -59,7 +69,6 @@ The application automatically categorizes transactions to provide a meaningful b
 ### Prerequisites
 
 - Flutter SDK installed.
-- Node.js and npm installed.
 
 ### Run the Flutter App
 
@@ -73,4 +82,4 @@ flutter run
 
 ---
 
-Built with ❤️ for the **SGKBxIBM_START_Hack_Tour25**.
+Built with ❤️ for the **SGKBxIBM_START_Hack_Tour25** by **Code of Duty**.

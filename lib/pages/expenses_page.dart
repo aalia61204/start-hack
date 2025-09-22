@@ -121,62 +121,100 @@ class _ExpensesPageState extends State<ExpensesPage> {
   }
 
 
-  _buildPieChart()  {
-    return Column(
-      children: [
-        SizedBox(
-          height: 25,
+_buildPieChart() {
+  return Column(
+    children: [
+      SizedBox(
+        height: 25,
+      ),
+      PieChart(
+        dataMap: dataMap,
+        animationDuration: Duration(milliseconds: 800),
+        chartLegendSpacing: 20.sp,
+        chartRadius: MediaQuery.of(context).size.width / 2.3,
+        // Use a professional, muted color palette
+        colorList: [
+          Color(0xFF42A5F5), // Lighter Blue
+          Color(0xFF66BB6A), // Lighter Green
+          Color(0xFFFFA726), // Lighter Orange
+          Color(0xFFEF5350), // Lighter Red
+          Color(0xFFAB47BC), // Lighter Purple
+          Color(0xFF26C6DA), // Lighter Cyan
+        ],
+        initialAngleInDegree: 0,
+        chartType: ChartType.ring,
+        ringStrokeWidth: 25.sp,
+        centerText: "\$ ${dataMap.values.fold<double>(0.0, (prev, e) => prev + e).toStringAsFixed(2)}",
+        centerTextStyle: TextStyle(
+          fontSize: 20.sp,
+          fontWeight: FontWeight.bold,
+          color: Colors.black87,
         ),
-        PieChart(
-          dataMap: dataMap,
-          animationDuration: Duration(milliseconds: 800),
-          chartLegendSpacing: 20.sp,
-          chartRadius: MediaQuery.of(context).size.width / 2.3,
-          colorList: colorList,
-          initialAngleInDegree: 0,
-          chartType: ChartType.ring,
-          ringStrokeWidth: 20.sp,
-          centerText: "\$ ${dataMap.values.fold<double>(0.0, (prev, e) => prev + e).toStringAsFixed(2)}",
-          legendOptions: LegendOptions(
-            showLegendsInRow: false,
-            legendPosition: LegendPosition.right,
-            showLegends: true,
-            legendShape: BoxShape.circle,
-            legendTextStyle: lighttitlestyle
+        legendOptions: LegendOptions(
+          showLegendsInRow: false,
+          legendPosition: LegendPosition.right,
+          showLegends: true,
+          legendShape: BoxShape.circle,
+          legendTextStyle: TextStyle(
+            color: Colors.black87,
+            fontWeight: FontWeight.w600,
+            fontSize: 14.sp,
           ),
-          chartValuesOptions: ChartValuesOptions(
-            showChartValueBackground: true,
-            showChartValues: true,
-            showChartValuesInPercentage: false,
-            showChartValuesOutside: false,
-            decimalPlaces: 1,
-          ),
         ),
-        SizedBox(
-          height: 25,
+        chartValuesOptions: ChartValuesOptions(
+          showChartValueBackground: false,
+          showChartValues: false, // Removed for a cleaner look
+          showChartValuesInPercentage: false, // Removed for a cleaner look
+          showChartValuesOutside: false,
+          decimalPlaces: 0,
         ),
-        Expanded(
-          child: ListView.builder(
-            itemCount: bankdata.length,
-            itemBuilder: (context, index) {
-              return Card(
-                margin: EdgeInsets.all(10),
-                elevation: 2,
-                shadowColor: Colors.grey.shade100,
-                child: ListTile(
-                  leading: CircleAvatar(
-                    backgroundColor: primaryClr.withAlpha(150),
-                    child: Icon(Icons.g_mobiledata, color: Colors.white, size: 22.sp,),
+      ),
+      SizedBox(
+        height: 25,
+      ),
+      Expanded(
+        child: ListView.builder(
+          itemCount: bankdata.length,
+          itemBuilder: (context, index) {
+            return Container(
+              margin: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(15),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.1),
+                    spreadRadius: 2,
+                    blurRadius: 10,
+                    offset: Offset(0, 5),
                   ),
-                  title: Text(bankdata[index].tEXTCREDITOR.toString(), style: lighttitlestyle.copyWith(fontSize: 15.sp),),
-                  subtitle: Text(bankdata[index].cATEGORY.toString(), style: lighttitlestyle.copyWith(fontSize: 14.sp, color: Colors.grey),),
-                  trailing: Text("CHF ${bankdata[index].aMOUNT}", style: lighttitlestyle.copyWith(fontSize: 14.sp, color: Colors.red),),
+                ],
+              ),
+              child: ListTile(
+                leading: CircleAvatar(
+                  radius: 22.sp,
+                  backgroundColor: Colors.transparent,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      gradient: RadialGradient(
+                        colors: [colorList[index % colorList.length].withOpacity(0.8), colorList[index % colorList.length]],
+                        center: Alignment.topLeft,
+                        radius: 1.5,
+                      ),
+                    ),
+                    child: Icon(Icons.g_mobiledata, color: Colors.white, size: 22.sp),
+                  ),
                 ),
-              );
-            }, 
-          )
-        )
-      ],
-    );
-  }
+                title: Text(bankdata[index].tEXTCREDITOR.toString(), style: lighttitlestyle.copyWith(fontSize: 15.sp),),
+                subtitle: Text(bankdata[index].cATEGORY.toString(), style: lighttitlestyle.copyWith(fontSize: 14.sp, color: Colors.grey),),
+                trailing: Text("CHF ${bankdata[index].aMOUNT}", style: lighttitlestyle.copyWith(fontSize: 14.sp, color: Colors.red),),
+              ),
+            );
+          },
+        ),
+      )
+    ],
+  );
+}
 }

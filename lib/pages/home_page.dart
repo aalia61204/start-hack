@@ -20,20 +20,18 @@ class _HomePageState extends State<HomePage> {
             children: [
               topProfile(),
               balanceCard(),
+              servicesTile(),
               recentTransactionsCard(),
               financialInsightsCard(),
               categorySpendingCard(),
               transactionHistoryCard(),
-              // incomeVsExpensesCard(),
-              // spendingChartCard(),
-              servicesTile()
             ],
           ),
         ),
       ),
     );
   }
-  
+
   topProfile() {
     return Padding(
       padding: const EdgeInsets.all(10.0),
@@ -61,13 +59,193 @@ class _HomePageState extends State<HomePage> {
   
   balanceCard() {
     return Padding(
-      padding: const EdgeInsets.all(10.0),
+      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+      child: Container(
+        width: double.infinity,
+        padding: EdgeInsets.symmetric(horizontal: 20.sp, vertical: 20.sp),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          gradient: LinearGradient(
+            colors: [
+              Colors.blue.shade800,
+              primaryClr,
+            ],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: primaryClr.withOpacity(0.2),
+              offset: Offset(0, 10),
+              blurRadius: 20,
+              spreadRadius: 3,
+            ),
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "Total Balance",
+              style: lighttitlestyle.copyWith(
+                fontSize: 12.sp,
+                color: Colors.white.withOpacity(0.8),
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            SizedBox(height: 5.sp),
+            Text(
+              "CHF 2402.10",
+              style: titlestyle.copyWith(
+                fontSize: 26.sp,
+                color: Colors.white,
+                fontWeight: FontWeight.w800,
+                letterSpacing: 1.2,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+  
+  servicesTile() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("Balance", style: titlestyle,),
-          Text("CHF 2402.10", style: lighttitlestyle.copyWith(fontSize: 22.sp, color: primaryClr),),
+          Text("Quick Services", style: titlestyle.copyWith(fontSize: 18.sp, fontWeight: FontWeight.bold)),
+          SizedBox(
+            height: 15.sp,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: _buildServiceItem(
+                  icon: Icons.qr_code_scanner,
+                  label: "Scan & Pay",
+                  color: Colors.deepPurpleAccent.shade400,
+                ),
+              ),
+              SizedBox(width: 12.sp),
+              Expanded(
+                child: _buildServiceItem(
+                  icon: Icons.swap_horiz,
+                  label: "Transfer",
+                  color: Colors.orange.shade700,
+                ),
+              ),
+              SizedBox(width: 12.sp),
+              Expanded(
+                child: _buildServiceItem(
+                  icon: Icons.history,
+                  label: "Statements",
+                  color: Colors.teal.shade600,
+                ),
+              ),
+              SizedBox(width: 12.sp),
+              Expanded(
+                child: _buildServiceItem(
+                  icon: Icons.credit_card,
+                  label: "Cards",
+                  color: Colors.pink.shade600,
+                ),
+              ),
+            ],
+          ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildServiceItem({required IconData icon, required String label, required Color color}) {
+    return GestureDetector(
+      onTap: () {
+        print("Tapped on $label service");
+      },
+      child: Container(
+        padding: EdgeInsets.symmetric(vertical: 15.sp, horizontal: 5.sp),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(18.sp),
+          boxShadow: [
+            BoxShadow(
+              color: color.withOpacity(0.1),
+              spreadRadius: 2,
+              blurRadius: 10,
+              offset: Offset(0, 4),
+            ),
+          ],
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              padding: EdgeInsets.all(10.sp),
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                gradient: LinearGradient(
+                  colors: [color.withOpacity(0.9), color],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+              ),
+              child: Icon(icon, size: 22.sp, color: Colors.white),
+            ),
+            SizedBox(height: 10.sp),
+            Text(
+              label,
+              style: lighttitlestyle.copyWith(fontSize: 11.sp, fontWeight: FontWeight.w600, color: Colors.grey[800]),
+              textAlign: TextAlign.center,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  recentTransactionsCard() {
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: Container(
+        padding: EdgeInsets.all(15.sp),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(15.sp),
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.1),
+              spreadRadius: 1,
+              blurRadius: 5,
+              offset: Offset(0, 2),
+            ),
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text("Recent Transactions", style: titlestyle),
+                TextButton(
+                  onPressed: () {},
+                  child: Text("View All", style: lighttitlestyle.copyWith(fontSize: 12.sp, color: primaryClr)),
+                ),
+              ],
+            ),
+            SizedBox(height: 10.sp),
+            _buildTransactionItem(title: "Uber Eats", date: "Today, 2:30 PM", amount: "-CHF 24.50", icon: Icons.restaurant, color: Colors.red),
+            _buildTransactionItem(title: "Salary", date: "Today, 9:00 AM", amount: "+CHF 3,200", icon: Icons.account_balance_wallet, color: Colors.green),
+            _buildTransactionItem(title: "Netflix", date: "Yesterday, 6:45 PM", amount: "-CHF 15.99", icon: Icons.movie, color: Colors.red),
+            _buildTransactionItem(title: "Gas Station", date: "Yesterday, 4:20 PM", amount: "-CHF 45.20", icon: Icons.local_gas_station, color: Colors.red),
+            _buildTransactionItem(title: "Freelance Payment", date: "2 days ago, 3:15 PM", amount: "+CHF 500", icon: Icons.work, color: Colors.green),
+          ],
+        ),
       ),
     );
   }
@@ -130,190 +308,7 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
-
-  spendingChartCard() {
-    return Padding(
-      padding: const EdgeInsets.all(10.0),
-      child: Container(
-        padding: EdgeInsets.all(15.sp),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15.sp),
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.1),
-              spreadRadius: 1,
-              blurRadius: 5,
-              offset: Offset(0, 2),
-            ),
-          ],
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text("Spending Trend", style: titlestyle),
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 8.sp, vertical: 4.sp),
-                  decoration: BoxDecoration(
-                    color: primaryClr.withAlpha(50),
-                    borderRadius: BorderRadius.circular(8.sp),
-                  ),
-                  child: Text("This Month", style: lighttitlestyle.copyWith(fontSize: 10.sp, color: primaryClr)),
-                ),
-              ],
-            ),
-            SizedBox(height: 15.sp),
-            Container(
-              height: 120.sp,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  _buildBarChart(60.sp, "Mon"),
-                  _buildBarChart(80.sp, "Tue"),
-                  _buildBarChart(45.sp, "Wed"),
-                  _buildBarChart(90.sp, "Thu"),
-                  _buildBarChart(70.sp, "Fri"),
-                  _buildBarChart(100.sp, "Sat"),
-                  _buildBarChart(85.sp, "Sun"),
-                ],
-              ),
-            ),
-            SizedBox(height: 10.sp),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text("Weekly Total: CHF 530", style: lighttitlestyle.copyWith(fontSize: 12.sp, color: Colors.grey[600])),
-                Text("↑ 12% vs last week", style: lighttitlestyle.copyWith(fontSize: 12.sp, color: Colors.red[600])),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildBarChart(double height, String label) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        Container(
-          width: 20.sp,
-          height: height,
-          decoration: BoxDecoration(
-            color: primaryClr.withAlpha(150),
-            borderRadius: BorderRadius.circular(4.sp),
-          ),
-        ),
-        SizedBox(height: 5.sp),
-        Text(label, style: lighttitlestyle.copyWith(fontSize: 10.sp, color: Colors.grey[600])),
-      ],
-    );
-  }
-
-  incomeVsExpensesCard() {
-    return Padding(
-      padding: const EdgeInsets.all(10.0),
-      child: Container(
-        padding: EdgeInsets.all(15.sp),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15.sp),
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.1),
-              spreadRadius: 1,
-              blurRadius: 5,
-              offset: Offset(0, 2),
-            ),
-          ],
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text("Income vs Expenses", style: titlestyle),
-            SizedBox(height: 15.sp),
-            Row(
-              children: [
-                Expanded(
-                  child: Column(
-                    children: [
-                      Container(
-                        width: 80.sp,
-                        height: 80.sp,
-                        child: Stack(
-                          children: [
-                            CircularProgressIndicator(
-                              value: 0.67,
-                              strokeWidth: 8.sp,
-                              backgroundColor: Colors.grey[200],
-                              valueColor: AlwaysStoppedAnimation<Color>(primaryClr),
-                            ),
-                            Center(
-                              child: Text("67%", style: titlestyle.copyWith(fontSize: 14.sp, color: primaryClr)),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(height: 8.sp),
-                      Text("Income", style: lighttitlestyle.copyWith(fontSize: 12.sp)),
-                    ],
-                  ),
-                ),
-                Expanded(
-                  child: Column(
-                    children: [
-                      Container(
-                        width: 80.sp,
-                        height: 80.sp,
-                        child: Stack(
-                          children: [
-                            CircularProgressIndicator(
-                              value: 0.45,
-                              strokeWidth: 8.sp,
-                              backgroundColor: Colors.grey[200],
-                              valueColor: AlwaysStoppedAnimation<Color>(Colors.red[600]!),
-                            ),
-                            Center(
-                              child: Text("45%", style: titlestyle.copyWith(fontSize: 14.sp, color: Colors.red[600])),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(height: 8.sp),
-                      Text("Expenses", style: lighttitlestyle.copyWith(fontSize: 12.sp)),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(height: 15.sp),
-            Container(
-              padding: EdgeInsets.all(10.sp),
-              decoration: BoxDecoration(
-                color: Colors.green[50],
-                borderRadius: BorderRadius.circular(8.sp),
-              ),
-              child: Row(
-                children: [
-                  Icon(Icons.trending_up, color: Colors.green[600], size: 16.sp),
-                  SizedBox(width: 8.sp),
-                  Expanded(
-                    child: Text("You're saving CHF 1,050 this month!", 
-                      style: lighttitlestyle.copyWith(fontSize: 12.sp, color: Colors.green[700])),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
+  
   categorySpendingCard() {
     return Padding(
       padding: const EdgeInsets.all(10.0),
@@ -386,157 +381,115 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
           ),
-          Text("CHF ${amount.toStringAsFixed(0)}", 
-            style: titlestyle.copyWith(fontSize: 12.sp, color: color)),
+          Text("CHF ${amount.toStringAsFixed(0)}", style: titlestyle.copyWith(fontSize: 12.sp, color: color)),
         ],
       ),
     );
   }
 
-  recentTransactionsCard() {
+  transactionHistoryCard() {
     return Padding(
-      padding: const EdgeInsets.all(10.0),
+      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
       child: Container(
-        padding: EdgeInsets.all(15.sp),
+        padding: EdgeInsets.symmetric(horizontal: 15.sp, vertical: 20.sp),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15.sp),
           color: Colors.white,
+          borderRadius: BorderRadius.circular(20.sp),
           boxShadow: [
             BoxShadow(
               color: Colors.grey.withOpacity(0.1),
-              spreadRadius: 1,
-              blurRadius: 5,
-              offset: Offset(0, 2),
+              spreadRadius: 2,
+              blurRadius: 10,
+              offset: Offset(0, 4),
             ),
           ],
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text("Recent Transactions", style: titlestyle),
-                TextButton(
-                  onPressed: () {},
-                  child: Text("View All", style: lighttitlestyle.copyWith(fontSize: 12.sp, color: primaryClr)),
-                ),
-              ],
+            Text("Transaction History", style: titlestyle.copyWith(fontSize: 18.sp, fontWeight: FontWeight.bold)),
+            SizedBox(height: 15.sp),
+            _buildTransactionItem(
+              title: "Spotify Subscription",
+              date: "Nov 20, 2025",
+              amount: "-CHF 12.99",
+              icon: Icons.music_note,
+              color: Colors.green.shade700,
             ),
-            SizedBox(height: 10.sp),
-            _buildTransactionItem("Uber Eats", "Today, 2:30 PM", "-CHF 24.50", Icons.restaurant, Colors.red),
-            _buildTransactionItem("Salary", "Today, 9:00 AM", "+CHF 3,200", Icons.account_balance_wallet, Colors.green),
-            _buildTransactionItem("Netflix", "Yesterday, 6:45 PM", "-CHF 15.99", Icons.movie, Colors.red),
-            _buildTransactionItem("Gas Station", "Yesterday, 4:20 PM", "-CHF 45.20", Icons.local_gas_station, Colors.red),
-            _buildTransactionItem("Freelance Payment", "2 days ago, 3:15 PM", "+CHF 500", Icons.work, Colors.green),
+            _buildTransactionItem(
+              title: "Online Shopping",
+              date: "Nov 18, 2025",
+              amount: "-CHF 75.50",
+              icon: Icons.shopping_cart,
+              color: Colors.blue.shade700,
+            ),
+            _buildTransactionItem(
+              title: "Coffee Shop",
+              date: "Nov 17, 2025",
+              amount: "-CHF 4.25",
+              icon: Icons.local_cafe,
+              color: Colors.brown.shade700,
+            ),
+            _buildTransactionItem(
+              title: "Gym Membership",
+              date: "Nov 15, 2025",
+              amount: "-CHF 50.00",
+              icon: Icons.fitness_center,
+              color: Colors.red.shade700,
+            ),
+            _buildTransactionItem(
+              title: "Received from John",
+              date: "Nov 12, 2025",
+              amount: "+CHF 200.00",
+              icon: Icons.person_add,
+              color: Colors.indigo.shade700,
+            ),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildTransactionItem(String title, String time, String amount, IconData icon, Color color) {
+  Widget _buildTransactionItem({
+    required String title,
+    required String date,
+    required String amount,
+    required IconData icon,
+    required Color color,
+  }) {
+    bool isCredit = amount.startsWith("+");
     return Padding(
-      padding: EdgeInsets.only(bottom: 12.sp),
+      padding: EdgeInsets.symmetric(vertical: 10.sp),
       child: Row(
         children: [
           Container(
-            padding: EdgeInsets.all(8.sp),
+            padding: EdgeInsets.all(10.sp),
             decoration: BoxDecoration(
-              color: color.withAlpha(50),
-              borderRadius: BorderRadius.circular(8.sp),
+              color: color.withOpacity(0.1),
+              borderRadius: BorderRadius.circular(15.sp),
             ),
-            child: Icon(icon, color: color, size: 16.sp),
+            child: Icon(icon, color: color, size: 20.sp),
           ),
-          SizedBox(width: 12.sp),
+          SizedBox(width: 15.sp),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(title, style: lighttitlestyle.copyWith(fontSize: 13.sp)),
-                Text(time, style: lighttitlestyle.copyWith(fontSize: 11.sp, color: Colors.grey[600])),
+                Text(
+                  title,
+                  style: lighttitlestyle.copyWith(fontSize: 14.sp, fontWeight: FontWeight.w600, color: Colors.black87),
+                ),
+                Text(
+                  date,
+                  style: lighttitlestyle.copyWith(fontSize: 12.sp, color: Colors.grey[600]),
+                ),
               ],
             ),
           ),
-          Text(amount, style: titlestyle.copyWith(fontSize: 13.sp, color: color)),
-        ],
-      ),
-    );
-  }
-  
-  transactionHistoryCard() {
-    return SizedBox(
-      height: 50.sp,
-      child: ListView.builder(
-        itemCount: 5,
-        shrinkWrap: true,
-        scrollDirection: Axis.horizontal,
-        itemBuilder: (context, index) {
-          return Container(
-            width: 50.sp,
-            height: 50.sp,
-            padding: EdgeInsets.all(15.sp),
-            margin: EdgeInsets.only(right: 10.sp),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10.sp),
-              color: Colors.white,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  padding: EdgeInsets.all(10.sp),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12.sp),
-                    color: primaryClr.withAlpha(150)
-                  ),
-                  child: Icon(Icons.food_bank_outlined, color: Colors.white,)
-                ),
-                SizedBox(
-                  height: 20.sp,
-                ),
-                Text("CHF 20.25", style: lighttitlestyle,),
-                Text("Uber Eats", style: lighttitlestyle,),
-              ],
-            ),
-          );
-        },
-        itemExtent: 50.sp,
-      ),
-    );
-  }
-  
-  servicesTile() {
-    return Padding(
-      padding: const EdgeInsets.all(10.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text("Services", style: titlestyle,),
-          SizedBox(
-            height: 10.sp,
+          Text(
+            amount,
+            style: titlestyle.copyWith(fontSize: 14.sp, fontWeight: FontWeight.w700, color: isCredit ? Colors.green.shade600 : Colors.red.shade600),
           ),
-          GridView.builder(
-            itemCount: 4,
-            shrinkWrap: true,
-            padding: EdgeInsets.symmetric(horizontal: 15.sp),
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2, 
-              crossAxisSpacing: 12.sp, 
-              mainAxisSpacing: 12.sp,
-              childAspectRatio: 1.5
-            ),
-            itemBuilder: (context, index) {
-              return Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15.sp),
-                  color: primaryClr.withAlpha(150),
-                ),
-                child: Center(child: Text("Service $index", style: titlestyle.copyWith(color: Colors.white),)),
-              );
-            },
-      
-          )
         ],
       ),
     );
